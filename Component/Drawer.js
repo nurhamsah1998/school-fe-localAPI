@@ -26,6 +26,7 @@ const drawerWidth = 240;
 export default function ClippedDrawer({ children, title }) {
   const router = useRouter();
   const nameTitle = router.pathname.replace('/', '');
+  const pathTitle = nameTitle.replace('-', ' ');
   function upperCase(word) {
     return word.charAt(0).toUpperCase() + word.slice(1);
   }
@@ -35,7 +36,7 @@ export default function ClippedDrawer({ children, title }) {
       <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <Toolbar sx={{ justifyContent: 'space-between' }}>
           <Typography variant="h6" noWrap component="div">
-            {title || upperCase(nameTitle)}
+            {title || upperCase(pathTitle)}
           </Typography>
           <Typography fontSize={16} noWrap component="div">
             {moment().format('dddd Do MMMM YYYY')}
@@ -54,7 +55,21 @@ export default function ClippedDrawer({ children, title }) {
         <Box sx={{ overflow: 'auto' }}>
           <List>
             {['Beranda', 'Siswa', 'Dana Boss', 'Keuangan'].map((text, index) => (
-              <ListItem button key={text} onClick={() => router.push('/dasboard')}>
+              <ListItem
+                button
+                key={text}
+                onClick={() => {
+                  if (index === 0) {
+                    router.push('/dasboard');
+                  } else if (index === 1) {
+                    router.push('/siswa');
+                  } else if (index === 2) {
+                    router.push('/dana-bos');
+                  } else if (index === 3) {
+                    router.push('/keuangan');
+                  }
+                }}
+              >
                 <ListItemIcon>
                   {index === 0 ? <DashboardIcon /> : index === 1 ? <SchoolIcon /> : index === 2 ? <AssuredWorkloadIcon /> : index === 3 && <MonetizationOnIcon />}
                 </ListItemIcon>
