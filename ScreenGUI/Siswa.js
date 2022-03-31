@@ -52,7 +52,7 @@ function Siswa() {
               }}
               item
             >
-              <Button onClick={e.path}>
+              <button onClick={e.path} style={{ backgroundColor: 'transparent', borderColor: 'transparent' }}>
                 <Box sx={{ p: 2, position: 'relative', height: '100%', width: '100%', cursor: 'pointer' }}>
                   <Box>
                     <Typography fontSize={23} textAlign="center" fontWeight={700} color="white">
@@ -70,7 +70,7 @@ function Siswa() {
                     </Typography>
                   </Box>
                 </Box>
-              </Button>
+              </button>
             </Grid>
           );
         })}
