@@ -1,85 +1,55 @@
-import React, { useState } from 'react';
-import { Box, Button, Grid, TextField, Typography, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
-import { grey } from '@mui/material/colors';
-import Input from '../Component/Input';
+import React from 'react';
+import { Box, TextField, FormControl, InputLabel, Select, MenuItem, Typography, Button } from '@mui/material';
 import { useFormik } from 'formik';
+import axios from 'axios';
 
 function AddingStudent() {
-  const [gen, setGen] = useState(true);
   const formik = useFormik({
-    initialValues: { name: '', gender: '', birtDay: '', address: '', dad: '', mom: '' },
+    initialValues: { name: '', birt: '', address: '', dad: '', mom: '', gender: '' },
     onSubmit: (values) => {
-      console.log(values);
+      axios
+        .post('http://localhost:8000/post', values)
+        .then((res) => {
+          console.log('succes');
+          values.name = '';
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   });
-  const data = [
-    {
-      key: 1,
-      placeHolder: 'Nama siswa',
-      title: 'Nama Siswa',
-      name: 'name',
-    },
-    {
-      key: 3,
-      placeHolder: 'Tempat tanggal lahir siswa',
-      title: 'Tempat Tanggal Lahir',
-      name: 'birtDay',
-    },
-    {
-      key: 4,
-      placeHolder: 'Alamat lengkap siswa',
-      title: 'Alamat Lengkap',
-      name: 'address',
-    },
-    {
-      key: 5,
-      placeHolder: 'Nama ayah siswa',
-      title: 'Nama Ayah',
-      name: 'dad',
-    },
-    {
-      key: 6,
-      placeHolder: 'Nama ibu siswa',
-      title: 'Nama Ibu',
-      name: 'mom',
-    },
-  ];
   return (
-    <Box display="flex" justifyContent="flex-start">
-      <Box>
+    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <Box sx={{ width: '80%', mr: 10 }}>
         <Box sx={{ maxWidth: '470px' }}>
-          <Typography fontSize={26} fontWeight={800} color="primary">
+          <Typography fontSize={23} fontWeight={800} color="primary">
             Menambah Data Peserta Didik Baru{' '}
           </Typography>
           <Typography fontSize={17} fontWeight={400} color="primary">
             Masukkan data siswa dengan benar. data akan disimpan dilocal storange komputer.
           </Typography>
         </Box>
-        <Grid container direction="column" justifyContent="flex-start" sx={{ width: '100%', mt: 4 }}>
-          <form onSubmit={formik.handleSubmit}>
-            {data.map((e, i) => {
-              return (
-                <Input unique={e.key} name={e.name} id={e.name} value={formik.values[e.name]} onChange={formik.handleChange} anim={e.title} placeholder={e.placeHolder} fullWidth />
-              );
-            })}
-            <Grid item>
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">Jenis Kelamin</InputLabel>
-                <Select id="gender" name="gender" value={formik.values.gender} label="Jenis Kelamin" onChange={formik.handleChange}>
-                  <MenuItem value={'perempuan'}>Perempuan</MenuItem>
-                  <MenuItem value={'laki-laki'}>Laki - Laki</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-            <Button type="submit" variant="contained" sx={{ mt: 2, p: 2 }} fullWidth>
-              Tambah Siswa
-            </Button>
-          </form>
-        </Grid>
+        <form onSubmit={formik.handleSubmit} style={{ marginTop: '10px' }}>
+          <TextField sx={{ mb: 3 }} label="name" value={formik.values.name} name="name" id="name" onChange={formik.handleChange} fullWidth />
+          <FormControl sx={{ mb: 3 }} fullWidth>
+            <InputLabel>Jenis Kelamin Siswa</InputLabel>
+            <Select name="gender" id="gender" value={formik.values.gender} label="Jenis Kelamin Siswa" onChange={formik.handleChange}>
+              <MenuItem value="laki-laki">Laki - Laki</MenuItem>
+              <MenuItem value="perempuan">Perempuan</MenuItem>
+            </Select>
+          </FormControl>
+          <TextField sx={{ mb: 3 }} label="Tempat tanggal lahir" value={formik.values.birt} name="birt" id="birt" onChange={formik.handleChange} fullWidth />
+          <TextField sx={{ mb: 3 }} label="Alamat lengkap" value={formik.values.address} name="address" id="address" onChange={formik.handleChange} fullWidth />
+          <TextField sx={{ mb: 3 }} label="Nama ayah kandung" value={formik.values.dad} name="dad" id="dad" onChange={formik.handleChange} fullWidth />
+          <TextField sx={{ mb: 3 }} label="Nama ibu kandung" value={formik.values.mom} name="mom" id="mom" onChange={formik.handleChange} fullWidth />
+          <Button type="submit" sx={{ p: 2 }} variant="contained" fullWidth>
+            Tambah
+          </Button>
+        </form>
       </Box>
-      <Box sx={{ width: '30%' }}>
-        <Box sx={{ transform: 'scale(0.5)' }}>
-          <img src="/icon/add-student-icon.svg" />
+      <Box sx={{ width: 'fit-content' }}>
+        <Box sx={{}}>
+          <img style={{ width: '100%' }} src="/icon/add-student-icon.svg" />
         </Box>
       </Box>
     </Box>

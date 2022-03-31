@@ -88,9 +88,7 @@ export default function ClippedDrawer({ children, title }) {
           </List>
         </Box>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3, mt: 6 }}>
-        {children}
-      </Box>
+      <Box sx={{ mt: 6, p: 3 }}>{children}</Box>
     </Box>
   );
 }
