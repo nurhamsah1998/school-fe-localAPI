@@ -1,13 +1,13 @@
 import React from 'react';
 import { Button, Grid, Box } from '@mui/material';
 
-function Card({ item, xs, bgcolor, active, hover, children }) {
+function Card({ height, xs, bgcolor, active, hover, children }) {
   return (
     <Grid
       item
       sx={{
         bgcolor: bgcolor,
-        height: 230,
+        height: height,
         borderRadius: '12px',
         transition: 'all 0.4s',
         cursor: 'pointer',
