@@ -36,7 +36,7 @@ export default function ClippedDrawer({ children, title }) {
       <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <Toolbar sx={{ justifyContent: 'space-between' }}>
           <Typography variant="h6" noWrap component="div">
-            {title || upperCase(pathTitle)}
+            {title || upperCase(pathTitle.replace('siswa/', ''))}
           </Typography>
           <Typography fontSize={16} noWrap component="div">
             {moment().format('dddd Do MMMM YYYY')}

@@ -1,8 +1,10 @@
 import React from 'react';
 import { Box, Grid, Typography } from '@mui/material';
 import { indigo, deepOrange, teal, cyan, green, deepPurple } from '@mui/material/colors';
+import useFetchingData from '../Component/useFetchingData';
 
 function Dasboard() {
+  const { genderLength, studentAmount, lastUpdate } = useFetchingData();
   const data = [
     {
       key: 1,
@@ -10,9 +12,10 @@ function Dasboard() {
       title: 'Total Siswa',
       male: 'Siswa Laki - laki',
       female: 'Siswa Perempuan',
-      maleValue: 'null',
-      femaleValue: 'null',
-      amout: 'total',
+      maleValue: genderLength('laki-laki') + ' Siswa' || 'Belum Ada Data',
+      femaleValue: genderLength('perempuan') + ' Siswa' || 'Belum Ada Data',
+      amout: studentAmount + ' Total Siswa' || 'Belum Ada Data',
+      lastUpdate: lastUpdate() || 'Tidak ada data yang masuk',
     },
     {
       key: 2,
@@ -88,8 +91,11 @@ function Dasboard() {
                   </Box>
                 </Box>
                 <Box sx={{ position: 'absolute', bottom: '0px', right: '0px', p: 2 }}>
-                  <Typography fontSize={23} color="white">
+                  <Typography textAlign="right" fontSize={23} color="white">
                     {e.amout}
+                  </Typography>
+                  <Typography textAlign="right" fontSize={14} color="white">
+                    Terakhir diperbarui : {e.lastUpdate}
                   </Typography>
                 </Box>
               </Box>

@@ -7,13 +7,12 @@ import { useRouter } from 'next/router';
 
 function Siswa() {
   const router = useRouter();
-  console.log(router);
   const data = [
     {
       key: 1,
       color: deepOrange,
       icon: <FolderSharedIcon sx={{ height: 100, width: 100 }} />,
-      path: () => router.push(`/${router.pathname}/profil-siswa`),
+      path: () => router.push(`${router.pathname}/profil-siswa`),
       title: 'Profil Siswa',
       male: 'Siswa Laki - laki',
       female: 'Siswa Perempuan',
@@ -23,7 +22,7 @@ function Siswa() {
     {
       key: 6,
       color: green,
-      path: () => router.push(`/${router.pathname}/add-student`),
+      path: () => router.push(`${router.pathname}/add-student`),
       icon: <AddBoxIcon sx={{ height: 100, width: 100 }} />,
       title: 'Tambah Peserta Didik Baru',
     },
