@@ -1,20 +1,47 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, TextField, FormControl, InputLabel, Select, MenuItem, Typography, Button } from '@mui/material';
 import { useFormik } from 'formik';
 import axios from 'axios';
+import { useSnackbar } from 'notistack';
+import CircularProgress from '@mui/material/CircularProgress';
 
 function AddingStudent() {
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [textError, setTextError] = useState('');
+  const { enqueueSnackbar } = useSnackbar();
   const formik = useFormik({
-    initialValues: { name: '', birt: '', address: '', dad: '', mom: '', gender: '' },
+    initialValues: { name: '', birt: '', address: '', dad: '', mom: '', gender: '', phone: '', email: '' },
     onSubmit: (values) => {
+      setLoading(true);
+      if (formik.values.phone.length >= 13 || formik.values.phone.length <= 10) {
+        setTextError('Nomor Tidak Valid');
+        setOpen(true);
+        enqueueSnackbar(`Ups ! Data Tidak Terkirim`, { anchorOrigin: { vertical: 'bottom', horizontal: 'right' }, variant: 'error' });
+        setTimeout(() => {
+          setLoading(false);
+        }, 500);
+        return false;
+      }
       axios
         .post('http://localhost:8000/post', values)
         .then((res) => {
-          console.log('succes');
-          values.name = '';
+          enqueueSnackbar(`${res.data}`, { anchorOrigin: { vertical: 'bottom', horizontal: 'right' }, variant: 'success' });
+          setOpen(false);
+          setLoading(false);
+          formik.resetForm();
         })
         .catch((error) => {
-          console.log(error);
+          if (error.response) {
+            setOpen(true);
+            setTextError(error.response.data);
+            enqueueSnackbar(`Ups ! Data Tidak Terkirim`, { anchorOrigin: { vertical: 'bottom', horizontal: 'right' }, variant: 'error' });
+            setLoading(false);
+            return false;
+          } else {
+            enqueueSnackbar(`Ups ! Data Tidak Terkirim error_code:NTWE666`, { anchorOrigin: { vertical: 'bottom', horizontal: 'right' }, variant: 'error' });
+            setLoading(false);
+          }
         });
     },
   });
@@ -30,7 +57,7 @@ function AddingStudent() {
           </Typography>
         </Box>
         <form onSubmit={formik.handleSubmit} style={{ marginTop: '10px' }}>
-          <TextField sx={{ mb: 3 }} label="name" value={formik.values.name} name="name" id="name" onChange={formik.handleChange} fullWidth />
+          <TextField required sx={{ mb: 3 }} label="name" placeholder="Masukan nama" value={formik.values.name} name="name" id="name" onChange={formik.handleChange} fullWidth />
           <FormControl sx={{ mb: 3 }} fullWidth>
             <InputLabel>Jenis Kelamin Siswa</InputLabel>
             <Select name="gender" id="gender" value={formik.values.gender} label="Jenis Kelamin Siswa" onChange={formik.handleChange}>
@@ -38,12 +65,83 @@ function AddingStudent() {
               <MenuItem value="perempuan">Perempuan</MenuItem>
             </Select>
           </FormControl>
-          <TextField sx={{ mb: 3 }} label="Tempat tanggal lahir" value={formik.values.birt} name="birt" id="birt" onChange={formik.handleChange} fullWidth />
-          <TextField sx={{ mb: 3 }} label="Alamat lengkap" value={formik.values.address} name="address" id="address" onChange={formik.handleChange} fullWidth />
-          <TextField sx={{ mb: 3 }} label="Nama ayah kandung" value={formik.values.dad} name="dad" id="dad" onChange={formik.handleChange} fullWidth />
-          <TextField sx={{ mb: 3 }} label="Nama ibu kandung" value={formik.values.mom} name="mom" id="mom" onChange={formik.handleChange} fullWidth />
-          <Button type="submit" sx={{ p: 2 }} variant="contained" fullWidth>
-            Tambah
+          <TextField
+            required
+            sx={{ mb: 3 }}
+            label="Tempat tanggal lahir"
+            placeholder="Contoh : Kediri 14 juli 1998"
+            value={formik.values.birt}
+            name="birt"
+            id="birt"
+            onChange={formik.handleChange}
+            fullWidth
+          />
+          <TextField
+            required
+            placeholder="Masukkan alamat"
+            sx={{ mb: 3 }}
+            label="Alamat lengkap"
+            value={formik.values.address}
+            name="address"
+            id="address"
+            onChange={formik.handleChange}
+            fullWidth
+          />
+          <TextField
+            required
+            placeholder="Masukkan nama ayah kandung"
+            sx={{ mb: 3 }}
+            label="Nama ayah kandung"
+            value={formik.values.dad}
+            name="dad"
+            id="dad"
+            onChange={formik.handleChange}
+            fullWidth
+          />
+          <TextField
+            required
+            placeholder="Masukkan nama ibu kandung"
+            sx={{ mb: 3 }}
+            label="Nama ibu kandung"
+            value={formik.values.mom}
+            name="mom"
+            id="mom"
+            onChange={formik.handleChange}
+            fullWidth
+          />
+          <TextField
+            required
+            placeholder="Masukkan email"
+            sx={{ mb: 3 }}
+            label="Email"
+            value={formik.values.email}
+            name="email"
+            id="email"
+            onChange={formik.handleChange}
+            fullWidth
+          />
+          <TextField
+            required
+            error={open ? true : false}
+            helperText={open ? textError : false}
+            placeholder="Masukkan no. telfon"
+            sx={{ mb: 3 }}
+            label="Nomor Telpon Yang Bisa di Hubungi"
+            value={formik.values.phone}
+            name="phone"
+            id="phone"
+            onChange={formik.handleChange}
+            fullWidth
+          />
+          <Button type="submit" disabled={loading ? true : false} sx={{ p: 2 }} variant="contained" fullWidth>
+            {loading ? (
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <CircularProgress size={20} color="inherit" />
+                <Box ml={2}>Memproses . .</Box>
+              </Box>
+            ) : (
+              <Box>Simpan</Box>
+            )}
           </Button>
         </form>
       </Box>
