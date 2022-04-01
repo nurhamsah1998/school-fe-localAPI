@@ -88,7 +88,7 @@ export default function ClippedDrawer({ children, title }) {
           </List>
         </Box>
       </Drawer>
-      <Box sx={{ mt: 6, p: 3 }}>{children}</Box>
+      <Box sx={{ mt: 6, p: 3, width: '100%' }}>{children}</Box>
     </Box>
   );
 }
