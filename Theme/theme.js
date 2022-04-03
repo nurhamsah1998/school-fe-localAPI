@@ -1,5 +1,5 @@
-import { createTheme, responsiveFontSizes } from '@mui/material/styles';
-import { green, deepPurple, teal } from '@mui/material/colors';
+import { createTheme, responsiveFontSizes } from "@mui/material/styles";
+import { green, deepPurple, teal, red } from "@mui/material/colors";
 
 const styles = createTheme({
   palette: {
@@ -8,6 +8,9 @@ const styles = createTheme({
     },
     secondary: {
       main: deepPurple[500],
+    },
+    error: {
+      main: red[500],
     },
   },
 });
