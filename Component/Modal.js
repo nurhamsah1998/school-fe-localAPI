@@ -73,6 +73,11 @@ export default function NestedModal({ openModal, close, data }) {
           name: 'Tempat tgl Lahir',
           title: data?.userProfile?.map((i) => i.birt),
         },
+        {
+          id: 5,
+          name: 'Bantuan siswa',
+          title: data?.studentHelp ? 'Verify' : 'Not verify',
+        },
       ],
     },
     {
@@ -150,6 +155,12 @@ export default function NestedModal({ openModal, close, data }) {
             </Box>
           </Box>
           {/* <ChildModal /> */}
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 5 }}>
+            <Button variant="contained" sx={{ mr: 3 }} color="error">
+              delete
+            </Button>
+            <Button variant="contained">Modif</Button>
+          </Box>
         </Box>
       </Modal>
     </div>

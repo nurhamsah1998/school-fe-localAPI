@@ -72,6 +72,7 @@ function AddingStudent() {
         });
     },
   });
+  console.log(data?.data);
   return (
     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
       <Box sx={{ width: '80%', mr: 10 }}>

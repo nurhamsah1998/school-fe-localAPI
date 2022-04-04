@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import Drawer from '../../Component/Drawer';
-import { TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Paper, Typography } from '@mui/material';
+import { TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Paper, Typography, Box, Button } from '@mui/material';
 import Modal from '../../Component/Modal';
 import useFetchingData from '../../Component/useFetchingData';
 import { grey, teal } from '@mui/material/colors';
+import SearchIcon from '@mui/icons-material/Search';
+import BackupIcon from '@mui/icons-material/Backup';
+import DeleteIcon from '@mui/icons-material/Delete';
 function StudentProfile() {
   const [open, setOpen] = useState(false);
   const [dataProps, setDataProps] = useState([]);
@@ -37,7 +40,21 @@ function StudentProfile() {
   return (
     <Drawer>
       <Modal openModal={open} data={dataProps} close={handleCloseModal} />
-      <TableContainer component={Paper} sx={{ maxHeight: 600 }}>
+      <Box sx={{ mt: 4 }}>
+        <Button variant="contained" color="info">
+          Backup Data
+          <BackupIcon sx={{ ml: 1 }} />
+        </Button>
+        <Button variant="contained" sx={{ ml: 2 }} color="success">
+          Cari siswa
+          <SearchIcon />
+        </Button>
+        <Button variant="contained" sx={{ ml: 2 }} color="error">
+          Hapus data siswa
+          <DeleteIcon />
+        </Button>
+      </Box>
+      <TableContainer component={Paper} sx={{ maxHeight: 600, mt: 3 }}>
         <Table>
           <TableHead>
             <TableRow sx={{ background: teal[400], position: 'sticky', top: 0 }}>
