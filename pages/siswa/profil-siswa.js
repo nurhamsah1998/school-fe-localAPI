@@ -1,18 +1,9 @@
-import React, { useState } from "react";
-import Drawer from "../../Component/Drawer";
-import {
-  TableContainer,
-  Table,
-  TableHead,
-  TableBody,
-  TableRow,
-  TableCell,
-  Paper,
-  Typography,
-} from "@mui/material";
-import Modal from "../../Component/Modal";
-import useFetchingData from "../../Component/useFetchingData";
-import { grey, teal } from "@mui/material/colors";
+import React, { useState } from 'react';
+import Drawer from '../../Component/Drawer';
+import { TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Paper, Typography } from '@mui/material';
+import Modal from '../../Component/Modal';
+import useFetchingData from '../../Component/useFetchingData';
+import { grey, teal } from '@mui/material/colors';
 function StudentProfile() {
   const [open, setOpen] = useState(false);
   const [dataProps, setDataProps] = useState([]);
@@ -21,19 +12,19 @@ function StudentProfile() {
   const title = [
     {
       id: 1,
-      title: "Nama",
+      title: 'Nama',
     },
     {
       id: 2,
-      title: "No. telfon",
+      title: 'No. telfon',
     },
     {
       id: 3,
-      title: "Alamat",
+      title: 'Alamat',
     },
     {
       id: 4,
-      title: "Gender",
+      title: 'Gender',
     },
   ];
   function handleOpenModal(e) {
@@ -49,32 +40,34 @@ function StudentProfile() {
       <TableContainer component={Paper} sx={{ maxHeight: 600 }}>
         <Table>
           <TableHead>
-            <TableRow sx={{ background: teal[400], position: "sticky", top: 0 }}>
+            <TableRow sx={{ background: teal[400], position: 'sticky', top: 0 }}>
               {title.map((i) => (
                 <TableCell key={i.id}>
-                  <Typography sx={{ color: "white", fontWeight: 700 }}>{i.title}</Typography>
+                  <Typography sx={{ color: 'white', fontWeight: 700 }}>{i.title}</Typography>
                 </TableCell>
               ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {userData?.map((i) => (
-              <TableRow
-                sx={{
-                  transition: "0.2s all",
-                  cursor: "pointer",
-                  "&:hover": { background: grey[300] },
-                  "&:active": { background: teal[500] },
-                }}
-                key={i.userID}
-                onClick={() => handleOpenModal(i)}
-              >
-                <TableCell>{i.name}</TableCell>
-                <TableCell>{i.phone}</TableCell>
-                <TableCell>{i.address}</TableCell>
-                <TableCell>{i.gender}</TableCell>
-              </TableRow>
-            ))}
+            {userData?.map((i) => {
+              return (
+                <TableRow
+                  sx={{
+                    transition: '0.2s all',
+                    cursor: 'pointer',
+                    '&:hover': { background: grey[300] },
+                    '&:active': { background: teal[500] },
+                  }}
+                  key={i.id}
+                  onClick={() => handleOpenModal(i)}
+                >
+                  <TableCell>{i.userProfile[0].name}</TableCell>
+                  <TableCell>{i.phone}</TableCell>
+                  <TableCell>{i.userProfile[3].address}</TableCell>
+                  <TableCell>{i.userProfile[1].gender}</TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>
