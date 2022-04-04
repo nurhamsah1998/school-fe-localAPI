@@ -4,6 +4,7 @@ import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
 import { Typography } from "@mui/material";
 import { teal } from "@mui/material/colors";
+import Payment from "./Payment";
 
 const style = {
   position: "absolute",
@@ -70,18 +71,22 @@ export default function NestedModal({ openModal, close, data }) {
       payment: [
         {
           id: 1,
+          status: data.payment?.map((e, i) => e.SPP_payment)[0],
           name: "Pembayaran SPP",
         },
         {
           id: 2,
+          status: data.payment?.map((e, i) => e.BUILDING_payment)[1],
           name: "Pembayaran Uang Gedung",
         },
         {
           id: 3,
+          status: data.payment?.map((e, i) => e.UNIFORM_payment)[2],
           name: "Pembayaran Seragam",
         },
         {
           id: 4,
+          status: data.payment?.map((e, i) => e.INSURANCE_payment)[3],
           name: "Pembayaran Asuransi",
         },
       ],
@@ -128,14 +133,16 @@ export default function NestedModal({ openModal, close, data }) {
                             sx={{
                               display: "flex",
                               alignItems: "baseline",
-                              width: "240px",
+                              width: "220px",
                               justifyContent: "space-between",
                             }}
                           >
                             <Typography>{payment.name}</Typography>
                             <span>:</span>
                           </Box>
-                          <Typography>Lunas</Typography>
+                          <Box sx={{ ml: 2 }}>
+                            <Payment payment_status={payment?.status} payment={payment?.status} />
+                          </Box>
                         </Box>
                       );
                     })}

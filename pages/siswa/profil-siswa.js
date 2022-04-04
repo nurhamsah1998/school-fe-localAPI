@@ -66,7 +66,7 @@ function StudentProfile() {
                   "&:hover": { background: grey[300] },
                   "&:active": { background: teal[500] },
                 }}
-                key={i.id}
+                key={i.userID}
                 onClick={() => handleOpenModal(i)}
               >
                 <TableCell>{i.name}</TableCell>

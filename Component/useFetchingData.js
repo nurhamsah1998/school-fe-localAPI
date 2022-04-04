@@ -7,10 +7,11 @@ function useFetchingData() {
     return await axios.get("http://localhost:8000/get");
   });
   function lastUpdate() {
-    const mapUpdate = data?.data.filter((i) => i.itemNo === data?.data?.length);
+    const mapUpdate = data?.data.filter((i) => i.itemNum === data?.data?.length);
     const date = mapUpdate?.map((e) => e.date);
     return date;
   }
+
   function genderLength(gender) {
     const rawData = data?.data;
     const male = rawData?.map((e) => e.gender);
