@@ -3,11 +3,13 @@ import Drawer from '../../Component/Drawer';
 import { TableContainer, Table, Checkbox, TableHead, TableBody, TableRow, TableCell, Paper, Typography, Box, Button, TextField } from '@mui/material';
 import Modal from '../../ScreenGUI/Modal';
 import useFetchingData from '../../Component/useFetchingData';
-import { grey, teal } from '@mui/material/colors';
+import { green, grey, teal, red } from '@mui/material/colors';
 import SearchIcon from '@mui/icons-material/Search';
 import BackupIcon from '@mui/icons-material/Backup';
 import DeleteIcon from '@mui/icons-material/Delete';
+import PriceCheckIcon from '@mui/icons-material/PriceCheck';
 import ModalCompt from '../../Component/ModalCompt';
+import ClearIcon from '@mui/icons-material/Clear';
 
 function StudentProfile() {
   const [open, setOpen] = useState(false);
@@ -32,6 +34,11 @@ function StudentProfile() {
     {
       id: 4,
       title: 'Gender',
+    },
+    {
+      id: 5,
+      align: 'center',
+      title: 'Bantuan Sekolah',
     },
   ];
   function handleOpenModal(e) {
@@ -62,6 +69,17 @@ function StudentProfile() {
           <TableCell>{i.phone}</TableCell>
           <TableCell>{i.userProfile[3].address}</TableCell>
           <TableCell>{i.userProfile[1].gender}</TableCell>
+          <TableCell sx={{ textAlign: 'center' }}>
+            {i.studentHelp ? (
+              <Typography>
+                <PriceCheckIcon sx={{ color: green[500] }} />
+              </Typography>
+            ) : (
+              <Typography>
+                <PriceCheckIcon sx={{ color: red[500] }} />
+              </Typography>
+            )}
+          </TableCell>
         </TableRow>
       );
     });
@@ -90,8 +108,11 @@ function StudentProfile() {
           sx={{ mt: 2 }}
           onChange={(e) => setInput(e.target.value)}
           value={input}
-          InputProps={{ startAdornment: <SearchIcon sx={{ mr: 1 }} /> }}
-          placeholder="cari siswa"
+          InputProps={{
+            startAdornment: <SearchIcon sx={{ mr: 1 }} />,
+            endAdornment: input.length >= 1 ? <ClearIcon sx={{ cursor: 'pointer' }} onClick={() => setInput('')} /> : null,
+          }}
+          placeholder="Masukkan hanya nama siswa"
           fullWidth
         />
       </Box>
@@ -101,7 +122,7 @@ function StudentProfile() {
             <TableRow sx={{ background: teal[400], position: 'sticky', top: 0 }}>
               {title.map((i) => (
                 <TableCell key={i.id}>
-                  <Typography sx={{ color: 'white', fontWeight: 700 }}>{i.title}</Typography>
+                  <Typography sx={{ color: 'white', textAlign: i.align, fontWeight: 700 }}>{i.title}</Typography>
                 </TableCell>
               ))}
             </TableRow>
