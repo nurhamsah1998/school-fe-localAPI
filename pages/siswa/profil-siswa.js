@@ -38,7 +38,7 @@ function StudentProfile() {
     setDataProps(e);
     setOpen(true);
   }
-  const dataTable = userData
+  const nurhamsah = userData
     ?.filter((value) => {
       if (value == '') {
         return false;
@@ -65,6 +65,8 @@ function StudentProfile() {
         </TableRow>
       );
     });
+  const u = nurhamsah?.length;
+  console.log(u);
   return (
     <Drawer>
       <Modal openModal={open} data={dataProps} handleClose={() => setOpen(false)} />
@@ -105,17 +107,7 @@ function StudentProfile() {
               ))}
             </TableRow>
           </TableHead>
-          <TableBody>
-            {dataTable?.length <= 1 ? (
-              <TableRow>
-                <TableCell>
-                  <Box sx={{ marginLeft: '200px' }}>asdasd</Box>
-                </TableCell>
-              </TableRow>
-            ) : (
-              dataTable
-            )}
-          </TableBody>
+          <TableBody>{nurhamsah}</TableBody>
         </Table>
       </TableContainer>
     </Drawer>
