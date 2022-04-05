@@ -11,7 +11,7 @@ function Payment({ payment_status, payment }) {
           : { background: red[600], padding: '2px 10px', borderRadius: '12px', color: 'white', ml: 2 }
       }
     >
-      <Typography textAlign="center" fontWeight={600}>
+      <Typography textAlign="center">
         {payment_status === 'paid' ? payment_status.replace('paid', 'Lunas') : payment_status === 'not_paid' && payment_status.replace('not_paid', 'Belum Lunas')}
       </Typography>
     </Box>

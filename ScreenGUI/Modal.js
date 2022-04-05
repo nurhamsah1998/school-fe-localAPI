@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
-import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
-import Button from '@mui/material/Button';
-import { Typography } from '@mui/material';
+import { Typography, Button, Modal, Box, Divider } from '@mui/material';
 import { grey, teal } from '@mui/material/colors';
-import Payment from './Payment';
+import Payment from '../Component/Payment';
 
 const style = {
   position: 'absolute',
@@ -16,8 +13,6 @@ const style = {
   borderRadius: '12px',
   boxShadow: 24,
   pt: 2,
-  px: 2,
-  pb: 2,
 };
 
 function ChildModal() {
@@ -43,11 +38,7 @@ function ChildModal() {
   );
 }
 
-export default function NestedModal({ openModal, close, data }) {
-  const [open, setOpen] = useState();
-  const handleClose = () => {
-    setOpen(false);
-  };
+export default function NestedModal({ openModal, handleClose, data }) {
   const ModalMenu = [
     {
       id: 1,
@@ -111,18 +102,20 @@ export default function NestedModal({ openModal, close, data }) {
     <div>
       <Modal open={openModal} onClose={handleClose} aria-labelledby="parent-modal-title" aria-describedby="parent-modal-description">
         <Box sx={{ ...style, width: 400, position: 'relative' }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <Button onClick={close} variant="contained" color="error" sx={{ color: 'white', fontWeight: 700 }}>
+          <Box
+            sx={{ position: 'absolute', bgcolor: teal[500], top: 0, left: 0, right: 0, display: 'flex', p: 2, justifyContent: 'space-between', borderRadius: '12px 12px 0px 0px' }}
+          >
+            <Button onClick={handleClose} variant="contained" color="error" sx={{ color: 'white', fontWeight: 700 }}>
               X
             </Button>
-            <Typography fontWeight={700} fontSize={23} color="primary">
+            <Typography fontWeight={700} fontSize={23} color="white">
               Profil Siswa
             </Typography>
           </Box>
 
-          <Box>
-            <Box sx={{ mt: 2 }}>
-              <Typography></Typography>
+          <Box sx={{ bgcolor: '#fff', mt: 8 }}>
+            <Box sx={{ mt: 2, px: 2 }}>
+              <Typography sx={{ fontSize: 30, fontWeight: 700, color: grey[500] }}>Status Pembayaran</Typography>
               {ModalMenu.map((i) =>
                 i.userProfile?.map((e) => (
                   <Box key={e.id}>
@@ -137,7 +130,7 @@ export default function NestedModal({ openModal, close, data }) {
                 ))
               )}
             </Box>
-            <Box sx={{ mt: 3 }}>
+            <Box sx={{ mt: 3, px: 2 }}>
               <Typography sx={{ fontSize: 30, fontWeight: 700, color: grey[500] }}>Status Pembayaran</Typography>
               {ModalMenu.map((i) =>
                 i.payment?.map((e) => (
@@ -155,7 +148,8 @@ export default function NestedModal({ openModal, close, data }) {
             </Box>
           </Box>
           {/* <ChildModal /> */}
-          <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 5 }}>
+          <Divider />
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end', p: 2 }}>
             <Button variant="contained" sx={{ mr: 3 }} color="error">
               delete
             </Button>
