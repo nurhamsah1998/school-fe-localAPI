@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Drawer from '../../Component/Drawer';
-import { TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Paper, Typography, Box, Button, TextField } from '@mui/material';
+import { TableContainer, Table, Checkbox, TableHead, TableBody, TableRow, TableCell, Paper, Typography, Box, Button, TextField } from '@mui/material';
 import Modal from '../../ScreenGUI/Modal';
 import useFetchingData from '../../Component/useFetchingData';
 import { grey, teal } from '@mui/material/colors';
@@ -12,7 +12,7 @@ import ModalCompt from '../../Component/ModalCompt';
 function StudentProfile() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState('');
-  const [dataFilter, setDataFilter] = useState(0);
+  const [dataFilter, setDataFilter] = useState(false);
   const [dataProps, setDataProps] = useState([]);
   const { data, isLoading } = useFetchingData();
   const userData = data?.data;
@@ -65,8 +65,7 @@ function StudentProfile() {
         </TableRow>
       );
     });
-  const u = nurhamsah?.length;
-  console.log(u);
+
   return (
     <Drawer>
       <Modal openModal={open} data={dataProps} handleClose={() => setOpen(false)} />
@@ -78,7 +77,7 @@ function StudentProfile() {
           <TextField InputProps={{ startAdornment: <SearchIcon sx={{ mr: 1 }} /> }} placeholder="cari siswa" fullWidth />
         </Box>
       </ModalCompt> */}
-      <Box sx={{ mt: 4 }}>
+      <Box sx={{ mt: 2 }}>
         <Button variant="contained" color="info">
           Backup Data
           <BackupIcon sx={{ ml: 1 }} />
@@ -96,7 +95,7 @@ function StudentProfile() {
           fullWidth
         />
       </Box>
-      <TableContainer component={Paper} sx={{ maxHeight: 600, mt: 2 }}>
+      <TableContainer component={Paper} sx={{ maxHeight: '100vh', mt: 2 }}>
         <Table>
           <TableHead>
             <TableRow sx={{ background: teal[400], position: 'sticky', top: 0 }}>
@@ -107,7 +106,22 @@ function StudentProfile() {
               ))}
             </TableRow>
           </TableHead>
-          <TableBody>{nurhamsah}</TableBody>
+          <TableBody>
+            {nurhamsah?.length === 0 ? (
+              <TableRow sx={{ borderColor: 'transparent' }}>
+                <TableCell sx={{ textAlign: 'center' }} colSpan={5}>
+                  <Typography fontSize={40} fontWeight={700} color={grey[400]}>
+                    Ughh!! Tidak Ada Data Yang Cocok !!
+                  </Typography>
+                  <Typography fontSize={20} fontWeight={500} color={grey[400]}>
+                    Coba periksa kembali data yang anda masukkan
+                  </Typography>
+                </TableCell>
+              </TableRow>
+            ) : (
+              nurhamsah
+            )}
+          </TableBody>
         </Table>
       </TableContainer>
     </Drawer>
